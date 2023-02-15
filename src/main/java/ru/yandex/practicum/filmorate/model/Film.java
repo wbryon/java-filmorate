@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 
 import javax.validation.constraints.NotBlank;
@@ -9,7 +8,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-import static ru.yandex.practicum.filmorate.controller.FilmController.date;
+import static ru.yandex.practicum.filmorate.controller.FilmController.cinematographyBirthday;
 
 @Data
 public class Film {
@@ -18,14 +17,13 @@ public class Film {
     private String name;
     @Size(max = 200, message = "максимальная длина описания — 200 символов")
     private String description;
-    @Setter(AccessLevel.NONE)
     private LocalDate releaseDate;
     @NonNull
     @Positive(message = "продолжительность фильма должна быть положительной")
     private Integer duration;
 
     public void setReleaseDate(LocalDate releaseDate) throws ValidationException {
-        if (releaseDate.isBefore(date))
+        if (releaseDate.isBefore(cinematographyBirthday))
             throw new ValidationException("Дата релиза не может быть раньше 28 декабря 1895 года!");
         this.releaseDate = releaseDate;
     }
