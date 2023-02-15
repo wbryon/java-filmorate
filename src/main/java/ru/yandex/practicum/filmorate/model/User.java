@@ -2,19 +2,17 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import java.time.LocalDate;
 
-/**
- * электронная почта не может быть пустой и должна содержать символ @;
- * логин не может быть пустым и содержать пробелы;
- * имя для отображения может быть пустым — в таком случае будет использован логин;
- * дата рождения не может быть в будущем
- */
 @Data
 public class User {
     private int id;
     private String name;
     private String email;
+    @NotBlank
     private String login;
-    private LocalDateTime birthday;
+//    @Past
+    private LocalDate birthday;
 }

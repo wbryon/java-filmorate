@@ -1,21 +1,41 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.validation.annotation.Validated;
+import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
-/**
- * название не может быть пустым;
- * максимальная длина описания — 200 символов;
- * дата релиза — не раньше 28 декабря 1895 года;
- * продолжительность фильма должна быть положительной
- */
+import static ru.yandex.practicum.filmorate.controller.FilmController.date;
+
 @Data
 public class Film {
     private int id;
+    @NotBlank
     private String name;
+    @Size(max = 200, message = "максимальная длина описания — 200 символов")
     private String description;
-    private LocalDateTime releaseDate;
-    private Duration duration;
+    @Setter(AccessLevel.NONE)
+    private LocalDate releaseDate;
+    @NonNull
+    @Positive(message = "продолжительность фильма должна быть положительной")
+    private Integer duration;
+
+    public void setReleaseDate(LocalDate releaseDate) throws ValidationException {
+        if (releaseDate.isBefore(date))
+            throw new ValidationException("Дата релиза не может быть раньше 28 декабря 1895 года!");
+        this.releaseDate = releaseDate;
+    }
+
+    public Film(int id, String name, String description, LocalDate releaseDate, @NonNull Integer duration)
+            throws ValidationException {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        setReleaseDate(releaseDate);
+        this.duration = duration;
+    }
 }
