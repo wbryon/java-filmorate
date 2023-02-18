@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -21,6 +22,7 @@ public class FilmControllerTest {
     Film film1;
     Film film2;
     Film film3;
+    FilmService filmService;
 
     @BeforeAll
     public static void start() {
@@ -29,7 +31,8 @@ public class FilmControllerTest {
 
     @BeforeEach
     void createFilms() {
-        filmController = new FilmController();
+        filmService = new FilmService();
+        filmController = new FilmController(filmService);
         film1 = Film.builder()
                 .name("John Wick")
                 .description("John Wick is a 2014 American neo-noir action thriller film directed by Chad Stahelski " +

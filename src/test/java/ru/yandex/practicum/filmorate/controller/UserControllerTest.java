@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -21,6 +22,7 @@ public class UserControllerTest {
     User user1;
     User user2;
     User user3;
+    UserService userService;
 
     @BeforeAll
     public static void start() {
@@ -29,7 +31,8 @@ public class UserControllerTest {
 
     @BeforeEach
     void createUsers() {
-        userController = new UserController();
+        userService = new UserService();
+        userController = new UserController(userService);
         user1 = User.builder()
                 .name("name1")
                 .email("111@111.ru")

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.ValidateService;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -13,33 +13,27 @@ import java.util.*;
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
-    private final Map<Integer, User> users = new HashMap<>();
-    private int userId = 0;
-    ValidateService validateService;
+    final UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public User create(@RequestBody @Valid User user) throws ValidationException {
-        validateService.validateUser(user);
-        if (users.containsValue(user))
-            throw new ValidationException("Такой пользователь уже существует");
-        user.setId(++userId);
-        users.put(user.getId(), user);
-        log.info("Добавлен новый пользователь: {}", user.getName());
+        userService.validate(user);
+        userService.save(user);
         return user;
     }
 
     @PutMapping
     public User update(@RequestBody @Valid User user) throws ValidationException {
-        validateService.validateUser(user);
-        if (!users.containsKey(user.getId()))
-            throw new ValidationException("Пользователь с таким id не найден");
-        users.put(user.getId(), user);
-        log.info("Данные пользователя обновлены: {}", user.getName());
+        userService.validate(user);
+        userService.update(user);
         return user;
     }
 
     @GetMapping
     public List<User> getUsers() {
-        return new ArrayList<>(users.values());
+        return userService.getAll();
     }
 }
