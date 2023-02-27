@@ -20,20 +20,20 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody @Valid User user) throws ValidationException {
-        userService.validate(user);
-        userService.save(user);
+//        userService.validate(user);
+//        userService.save(user);
         return user;
     }
 
     @PutMapping
     public User update(@RequestBody @Valid User user) throws ValidationException {
-        userService.validate(user);
-        userService.update(user);
+//        userService.validate(user);
+//        userService.update(user);
         return user;
     }
 
-    @GetMapping
-    public List<User> getUsers() {
-        return userService.getAll();
-    }
+//    @GetMapping
+//    public List<User> getUsers() {
+//        return userService.getAll();
+//    }
 }
