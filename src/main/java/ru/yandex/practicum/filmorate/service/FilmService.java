@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 @Slf4j
-@Component
+@Service
 public class FilmService {
     private static final Map<Integer, Film> films = new LinkedHashMap<>();
     public static final LocalDate cinematographyBirthday = LocalDate.of(1895, 12, 28);
