@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
@@ -14,26 +15,27 @@ import java.util.*;
 @RequestMapping(value = "/users")
 public class UserController {
     private final UserService userService;
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping
     public User create(@RequestBody @Valid User user) throws ValidationException {
-//        userService.validate(user);
-//        userService.save(user);
+        userService.getUserStorage().validate(user);
+        userService.getUserStorage().save(user);
         return user;
     }
 
     @PutMapping
     public User update(@RequestBody @Valid User user) throws ValidationException {
-//        userService.validate(user);
-//        userService.update(user);
+        userService.getUserStorage().validate(user);
+        userService.getUserStorage().update(user);
         return user;
     }
 
-//    @GetMapping
-//    public List<User> getUsers() {
-//        return userService.getAll();
-//    }
+    @GetMapping
+    public List<User> getUsers() {
+        return userService.getUserStorage().getAll();
+    }
 }

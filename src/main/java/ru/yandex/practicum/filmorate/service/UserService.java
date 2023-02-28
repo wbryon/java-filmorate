@@ -27,4 +27,8 @@ public class UserService {
     public List<User> getFriends(User user) {
         return user.getFriends();
     }
+
+    public UserStorage getUserStorage() {
+        return userStorage;
+    }
 }
