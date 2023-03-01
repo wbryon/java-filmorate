@@ -31,7 +31,7 @@ public class FilmControllerTest {
 
     @BeforeEach
     void createFilms() {
-        filmService = new FilmService();
+        filmService = new FilmService(filmService.getFilmStorage());
         filmController = new FilmController(filmService);
         film1 = Film.builder()
                 .name("John Wick")

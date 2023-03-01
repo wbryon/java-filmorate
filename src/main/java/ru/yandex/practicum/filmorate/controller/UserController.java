@@ -38,4 +38,21 @@ public class UserController {
     public List<User> getUsers() {
         return userService.getUserStorage().getAll();
     }
+
+    @GetMapping(value = "/{id}")
+    public User findUserById(@PathVariable String id) {
+        return userService.getUserStorage().getAll().get(getUsers().indexOf(id));
+    }
+
+    @PutMapping
+    public void addFriend() {}
+
+    @DeleteMapping
+    public void deleteFriend() {}
+
+    @GetMapping
+    public void getUserFriends() {}
+
+    @GetMapping
+    public void getSharedFriends() {}
 }

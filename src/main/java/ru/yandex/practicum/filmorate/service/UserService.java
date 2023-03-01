@@ -19,8 +19,8 @@ public class UserService {
         this.userStorage = userStorage;
     }
 
-    public void addFriend(User user) {
-        userStorage.getAll();
+    public List<User> addFriend(User user) {
+        return userStorage.getAll();
     }
     public void removeFriend(User user) {}
 

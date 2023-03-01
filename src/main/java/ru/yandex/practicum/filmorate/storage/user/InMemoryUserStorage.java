@@ -42,7 +42,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.info("Пользователь удалён: {}", user.getName());
     }
 
-    @Override
+//    @Override
     public List<User> getAll() {
         return new ArrayList<>(users.values());
     }
