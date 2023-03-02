@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @Builder
 public class User {
-    private Integer id;
+    private long id;
     private String name;
     @NotBlank
     @Email(message = "Невалидная электронная почта - отсутствует символ '@'")
@@ -20,7 +20,7 @@ public class User {
     private String login;
     @Past(message = "Дата рождения не может быть в будущем!")
     private LocalDate birthday;
-    private Set<Long> friendsId;
     private List<User> friends;
+    private Set<Long> friendsIds;
 
 }

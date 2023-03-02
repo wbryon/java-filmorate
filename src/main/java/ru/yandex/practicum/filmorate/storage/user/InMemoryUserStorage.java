@@ -15,13 +15,13 @@ import java.util.Map;
 @Component
 @Data
 public class InMemoryUserStorage implements UserStorage {
-    private static final Map<Integer, User> users = new LinkedHashMap<>();
-    private int userId = 0;
+    private static final Map<Long, User> users = new LinkedHashMap<>();
+    private long userId = 0;
     @Override
     public void save(User user) {
         if (users.containsValue(user))
             throw new ValidationException("Такой пользователь уже существует");
-        user.setId(++userId);
+        user.setId((int) ++userId);
         users.put(user.getId(), user);
         log.info("Добавлен новый пользователь: {}", user.getName());
     }
@@ -42,7 +42,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.info("Пользователь удалён: {}", user.getName());
     }
 
-//    @Override
+    @Override
     public List<User> getAll() {
         return new ArrayList<>(users.values());
     }

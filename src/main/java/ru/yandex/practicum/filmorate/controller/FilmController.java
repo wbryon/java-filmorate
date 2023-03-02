@@ -39,5 +39,17 @@ public class FilmController {
         return filmService.getFilmStorage().getAll();
     }
 
+    @GetMapping(value = "/{id}")
+    public Film findFilmById(@PathVariable("id") int filmId) {
+        return filmService.getFilmStorage().getAll().get(filmId);
+    }
 
+    @PutMapping(value = "/{id}/like/{userId}")
+    public void addLikeToFilm(@PathVariable("id") int filmId, @PathVariable int userId) {}
+
+    @DeleteMapping(value = "/{id}/like/{userId}")
+    public void deleteLikeFromFilm(@PathVariable("id") int filmId, @PathVariable int userId) {}
+
+    @GetMapping(value = "/popular?count={count}")
+    public void getPopularFilms(@PathVariable(required = false) int count) {}
 }

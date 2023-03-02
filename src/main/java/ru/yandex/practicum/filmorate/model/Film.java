@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -17,4 +19,6 @@ public class Film {
     @NotNull
     @Positive(message = "Продолжительность фильма должна быть положительной!")
     private Integer duration;
+    private Set<Long> filmsIds;
+    private List<Film> likes;
 }

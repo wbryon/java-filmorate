@@ -8,12 +8,18 @@ import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 @Service
 public class FilmService {
     private final FilmStorage filmStorage;
+    private final UserService userService;
 
-    public FilmService(FilmStorage filmStorage) {
+    public FilmService(FilmStorage filmStorage, UserService userService) {
         this.filmStorage = filmStorage;
+        this.userService = userService;
     }
 
     public FilmStorage getFilmStorage() {
         return filmStorage;
+    }
+
+    public void addLikeToFilm(int filmId, int userId) {
+
     }
 }
