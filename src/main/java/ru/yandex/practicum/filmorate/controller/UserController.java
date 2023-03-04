@@ -22,14 +22,12 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody @Valid User user) throws ValidationException {
-        userService.getUserStorage().validate(user);
-        userService.getUserStorage().save(user);
+        userService.getUserStorage().create(user);
         return user;
     }
 
     @PutMapping
     public User update(@RequestBody @Valid User user) throws ValidationException {
-        userService.getUserStorage().validate(user);
         userService.getUserStorage().update(user);
         return user;
     }
@@ -40,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public User findUserById(@PathVariable Integer id) {
-        return userService.getUserStorage().getAll().get(id);
+    public User findUserById(@PathVariable("id") Integer userId) {
+        return userService.getUserStorage().findById(userId);
     }
 
     @PutMapping(value = "/{id}/friends/{friendId}")
@@ -55,12 +53,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}/friends")
-    public void getUserFriends(@PathVariable int id) {
-        userService.getFriends(id);
+    public List<User> getUserFriends(@PathVariable int id) {
+        return userService.getFriends(id);
     }
 
     @GetMapping(value = "/{id}/friends/common/{otherId}")
-    public void getSharedFriends(@PathVariable int id, @PathVariable int otherId) {
-        userService.getSharedFriends(id, otherId);
+    public List<User> getSharedFriends(@PathVariable int id, @PathVariable int otherId) {
+        return userService.findSharedFriends(id, otherId);
     }
 }

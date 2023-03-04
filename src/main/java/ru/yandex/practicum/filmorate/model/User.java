@@ -6,12 +6,11 @@ import lombok.Data;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
 public class User {
-    private long id;
+    private int id;
     private String name;
     @NotBlank
     @Email(message = "Невалидная электронная почта - отсутствует символ '@'")
@@ -21,6 +20,5 @@ public class User {
     @Past(message = "Дата рождения не может быть в будущем!")
     private LocalDate birthday;
     private List<User> friends;
-    private Set<Long> friendsIds;
 
 }
