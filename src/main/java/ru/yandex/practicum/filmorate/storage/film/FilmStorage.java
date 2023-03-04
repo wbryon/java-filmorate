@@ -7,8 +7,8 @@ import java.util.List;
 
 @Repository
 public interface FilmStorage {
-    void create(Film film);
-    void update(Film film);
+    Film create(Film film);
+    Film update(Film film);
     List<Film> getAllFilms();
-    Film findById(int id);
+    Film findFilmById(int id);
 }

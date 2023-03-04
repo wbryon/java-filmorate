@@ -12,25 +12,29 @@ import java.util.*;
 @Slf4j
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
-    private static final Map<Integer, Film> films = new LinkedHashMap<>();
-    public static final LocalDate cinematographyBirthday = LocalDate.of(1895, 12, 28);
-    private int filmId = 0;
+    private final Map<Integer, Film> films = new LinkedHashMap<>();
+    private static final LocalDate cinematographyBirthday = LocalDate.of(1895, 12, 28);
+    private Integer filmId = 0;
 
-    public void create(Film film) {
-        validate(film);
+    @Override
+    public Film create(Film film) {
         if (films.containsValue(film))
             throw new ValidationException("Такой фильм уже есть в коллекции!");
+        validate(film);
         film.setId(++filmId);
         films.put(film.getId(), film);
         log.info("Добавлен новый фильм: {}", film.getName());
+        return film;
     }
 
-    public void update(Film film) {
-        validate(film);
+    @Override
+    public Film update(Film film) {
         if (!films.containsKey(film.getId()))
             throw new FilmNotFoundException("Фильм с таким id не найден в коллекции!");
+        validate(film);
         films.put(film.getId(), film);
         log.info("Обновлены данные о фильме: {}", film.getName());
+        return film;
     }
 
     @Override
@@ -39,7 +43,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film findById(int id) {
+    public Film findFilmById(int id) {
         if (!films.containsKey(id))
             throw new FilmNotFoundException("Фильм с таким id не найден в коллекции!");
         return films.get(id);

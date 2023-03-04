@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,34 +13,31 @@ import java.util.*;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping(value = "/users")
 public class UserController {
     private final UserService userService;
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping
     public User create(@RequestBody @Valid User user) throws ValidationException {
-        userService.getUserStorage().create(user);
+        userService.create(user);
         return user;
     }
 
     @PutMapping
     public User update(@RequestBody @Valid User user) throws ValidationException {
-        userService.getUserStorage().update(user);
+        userService.update(user);
         return user;
     }
 
     @GetMapping
     public List<User> getUsers() {
-        return userService.getUserStorage().getAll();
+        return userService.getAllUsers();
     }
 
     @GetMapping(value = "/{id}")
     public User findUserById(@PathVariable("id") Integer userId) {
-        return userService.getUserStorage().findById(userId);
+        return userService.findUserById(userId);
     }
 
     @PutMapping(value = "/{id}/friends/{friendId}")
@@ -53,12 +51,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}/friends")
-    public List<Integer> getUserFriends(@PathVariable int id) {
+    public List<User> getUserFriends(@PathVariable int id) {
         return userService.getFriends(id);
     }
 
     @GetMapping(value = "/{id}/friends/common/{otherId}")
-    public List<Integer> getSharedFriends(@PathVariable int id, @PathVariable int otherId) {
+    public List<User> getSharedFriends(@PathVariable int id, @PathVariable int otherId) {
         return userService.findSharedFriends(id, otherId);
     }
 }
