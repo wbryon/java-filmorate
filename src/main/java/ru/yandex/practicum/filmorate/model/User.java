@@ -19,6 +19,6 @@ public class User {
     private String login;
     @Past(message = "Дата рождения не может быть в будущем!")
     private LocalDate birthday;
-    private List<User> friends;
+    private List<Integer> friends;
 
 }

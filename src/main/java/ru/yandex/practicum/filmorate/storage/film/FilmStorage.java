@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface FilmStorage {
@@ -12,7 +11,4 @@ public interface FilmStorage {
     void update(Film film);
     List<Film> getAllFilms();
     Film findById(int id);
-    List<Integer> getFilmsIds();
-    Set<Integer> addLike(Integer filmId, Integer userId);
-    void removeLike(Integer filmId, Integer userId);
 }

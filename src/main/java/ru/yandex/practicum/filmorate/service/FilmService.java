@@ -2,13 +2,10 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exceptions.FilmAlreadyLiked;
-import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
-import ru.yandex.practicum.filmorate.exceptions.ValidationException;
+import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,30 +24,30 @@ public class FilmService {
         return filmStorage;
     }
 
-    public void addLikeToFilm(int filmId, int userId) {
-        Film film = filmStorage.findById(filmId);
-        if (!film.getLikedUserIds().contains(userId))
-            throw  new FilmAlreadyLiked("Этот пользователь уже ставил лайк фильму");
-            film.getLikedUserIds().add(userId);
-            film.setLikes(film.getLikedUserIds());
-
-    }
-
-    public void deleteLikeFromFilm(int filmId, int userId) {
-        if (userId <= 0)
-            throw new UserNotFoundException("id пользователя должен быть больше нуля");
-        filmStorage.findById(filmId).getLikedUserIds().remove(userId);
-    }
-
-    public List<Film> findMostLikedFilms(Integer count) {
-        if (count <= 0) {
-            throw new ValidationException("Количество фильмов должно быть больше 0");
+    public void addLike(Integer filmId, Integer userId) {
+        if (userService.findUserById(userId) != null) {
+            findFilmById(filmId).getLikes().add(userId);
         }
-//        if (filmStorage.getAllFilms().size() <= count) {
-//            return filmStorage.getAllFilms().stream().sorted(Comparator.comparingInt(film -> - film.getLikes().size()))
-//                    .collect(Collectors.toList());
-//        }
-        return filmStorage.getAllFilms().stream().sorted(Comparator.comparingInt(film -> - film.getLikes().size()))
-                .limit(count).collect(Collectors.toList());
+    }
+
+    public void deleteLikeFromFilm(Integer filmId, Integer userId) {
+        Film film = findFilmById(filmId);
+        if (userService.findUserById(userId) != null) {
+            film.getLikes().remove(userId);
+        }
+    }
+
+    public List<Film> findMostLikedFilms(int count) {
+        return filmStorage.getAllFilms().stream()
+                .sorted((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())
+                .limit(count)
+                .collect(Collectors.toList());
+    }
+
+    public Film findFilmById(int id) {
+        Film film = filmStorage.findById(id);
+        if (film == null)
+            throw new FilmNotFoundException("Фильм не найден");
+        return film;
     }
 }

@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.storage.film;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.filmorate.exceptions.FilmAlreadyLiked;
 import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -14,7 +13,6 @@ import java.util.*;
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
     private static final Map<Integer, Film> films = new LinkedHashMap<>();
-    private static final Set<Integer> likedUserIds = new HashSet<>();
     public static final LocalDate cinematographyBirthday = LocalDate.of(1895, 12, 28);
     private int filmId = 0;
 
@@ -47,29 +45,8 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.get(id);
     }
 
-    @Override
-    public List<Integer> getFilmsIds() {
-        return new ArrayList<>(films.keySet());
-    }
-
     private void validate(Film film) {
         if (film.getReleaseDate().isBefore(cinematographyBirthday))
             throw new ValidationException("Дата релиза не может быть раньше 28 декабря 1895 года!");
-    }
-
-    @Override
-    public Set<Integer> addLike(Integer filmId, Integer userId) {
-        if (!films.containsKey(filmId))
-            throw new FilmNotFoundException("Фильм не найден в коллекции!");
-        Set<Integer> likes = films.get(filmId).getLikes();
-        if (likes.contains(userId))
-            throw new FilmAlreadyLiked("Пользователь уже поставил лайк фильму");
-        likes.add(userId);
-        return likes;
-    }
-
-    @Override
-    public void removeLike(Integer filmId, Integer userId) {
-
     }
 }
