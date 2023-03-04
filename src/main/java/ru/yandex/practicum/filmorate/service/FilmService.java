@@ -28,13 +28,12 @@ public class FilmService {
     }
 
     public void addLikeToFilm(int filmId, int userId) {
-        if (!filmStorage.getLikedUserIds().contains(userId)) {
-            filmStorage.getLikedUserIds().add(userId);
-            Film film = filmStorage.getAllFilms().get(filmId);
+        Film film = filmStorage.findById(filmId);
+        if (!film.getLikedUserIds().contains(userId))
+            throw  new FilmAlreadyLiked("Этот пользователь уже ставил лайк фильму");
             film.getLikedUserIds().add(userId);
             film.setLikes(film.getLikedUserIds());
-        } else
-            throw  new FilmAlreadyLiked("Этот пользователь уже ставил лайк фильму");
+
     }
 
     public void deleteLikeFromFilm(int filmId, int userId) {
@@ -47,11 +46,11 @@ public class FilmService {
         if (count <= 0) {
             throw new ValidationException("Количество фильмов должно быть больше 0");
         }
-        if (filmStorage.getAllFilms().size() <= count) {
-            return filmStorage.getAllFilms().stream().sorted(Comparator.comparingInt(film -> - film.getLikes()))
-                    .collect(Collectors.toList());
-        }
-        return filmStorage.getAllFilms().stream().sorted(Comparator.comparingInt(film -> - film.getLikes()))
+//        if (filmStorage.getAllFilms().size() <= count) {
+//            return filmStorage.getAllFilms().stream().sorted(Comparator.comparingInt(film -> - film.getLikes().size()))
+//                    .collect(Collectors.toList());
+//        }
+        return filmStorage.getAllFilms().stream().sorted(Comparator.comparingInt(film -> - film.getLikes().size()))
                 .limit(count).collect(Collectors.toList());
     }
 }

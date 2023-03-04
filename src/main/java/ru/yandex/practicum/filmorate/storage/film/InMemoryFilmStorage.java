@@ -57,10 +57,6 @@ public class InMemoryFilmStorage implements FilmStorage {
             throw new ValidationException("Дата релиза не может быть раньше 28 декабря 1895 года!");
     }
 
-    public Set<Integer> getLikedUserIds() {
-        return likedUserIds;
-    }
-
     @Override
     public Set<Integer> addLike(Integer filmId, Integer userId) {
         if (!films.containsKey(filmId))

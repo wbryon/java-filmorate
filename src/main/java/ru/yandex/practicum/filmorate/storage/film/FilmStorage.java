@@ -13,7 +13,6 @@ public interface FilmStorage {
     List<Film> getAllFilms();
     Film findById(int id);
     List<Integer> getFilmsIds();
-    Set<Integer> getLikedUserIds();
     Set<Integer> addLike(Integer filmId, Integer userId);
     void removeLike(Integer filmId, Integer userId);
 }
