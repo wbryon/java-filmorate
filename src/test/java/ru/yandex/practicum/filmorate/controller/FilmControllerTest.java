@@ -1,18 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.exceptions.ValidationException;
-import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmService;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import java.time.LocalDate;
-import java.util.Set;
-
-import static javax.validation.Validation.buildDefaultValidatorFactory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -22,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 //    Film film1;
 //    Film film2;
 //    Film film3;
-//    FilmService filmService;
+//    InMemoryFilmService filmService;
 //
 //    @BeforeAll
 //    public static void start() {
@@ -31,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 //
 //    @BeforeEach
 //    void createFilms() {
-//        filmService = new FilmService(filmService.getFilmStorage());
+//        filmService = new InMemoryFilmService(filmService.getFilmStorage());
 //        filmController = new FilmController(filmService);
 //        film1 = Film.builder()
 //                .name("John Wick")

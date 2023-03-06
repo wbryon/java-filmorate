@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.InMemoryFilmService;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -15,7 +15,7 @@ import java.util.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping(value = "/films")
 public class FilmController {
-    final FilmService filmService;
+    final InMemoryFilmService filmService;
 
     @PostMapping
     public Film create(@RequestBody @Valid Film film) {

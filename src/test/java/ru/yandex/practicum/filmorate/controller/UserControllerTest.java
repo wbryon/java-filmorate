@@ -1,18 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.exceptions.ValidationException;
-import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.UserService;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import java.time.LocalDate;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -22,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 //    User user1;
 //    User user2;
 //    User user3;
-//    UserService userService;
+//    InMemoryUserService userService;
 //
 //    @BeforeAll
 //    public static void start() {
@@ -31,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 //
 //    @BeforeEach
 //    void createUsers() {
-//        userService = new UserService(userService.getUserStorage());
+//        userService = new InMemoryUserService(userService.getUserStorage());
 //        userController = new UserController(userStorage, userService);
 //        user1 = User.builder()
 //                .name("name1")

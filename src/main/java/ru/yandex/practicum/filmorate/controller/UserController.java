@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.service.InMemoryUserService;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -16,7 +16,7 @@ import java.util.*;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping(value = "/users")
 public class UserController {
-    private final UserService userService;
+    private final InMemoryUserService userService;
 
     @PostMapping
     public User create(@RequestBody @Valid User user) throws ValidationException {
