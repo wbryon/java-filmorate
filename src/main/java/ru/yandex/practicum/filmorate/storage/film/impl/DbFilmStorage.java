@@ -1,11 +1,23 @@
 package ru.yandex.practicum.filmorate.storage.film.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
 import java.util.List;
 
-public class FilmDbStorage implements FilmStorage {
+import org.springframework.jdbc.core.JdbcTemplate;
+
+@Slf4j
+@Component
+public class DbFilmStorage implements FilmStorage {
+    private final JdbcTemplate jdbcTemplate;
+
+    public DbFilmStorage(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public Film create(Film film) {
         return null;
