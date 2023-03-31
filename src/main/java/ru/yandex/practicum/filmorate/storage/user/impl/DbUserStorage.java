@@ -1,8 +1,10 @@
 package ru.yandex.practicum.filmorate.storage.user.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.impl.UserMapper;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.List;
@@ -10,9 +12,16 @@ import java.util.List;
 @Slf4j
 @Component
 public class DbUserStorage implements UserStorage {
+    private final JdbcTemplate jdbcTemplate;
+
+    public DbUserStorage(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public void create(User user) {
-
+        jdbcTemplate.update("INSERT INTO USERS VALUES (?,?,?,?,?)", user.getId(), user.getEmail(), user.getLogin(),
+                user.getName(), user.getBirthday());
     }
 
     @Override
@@ -22,11 +31,11 @@ public class DbUserStorage implements UserStorage {
 
     @Override
     public List<User> getAll() {
-        return null;
+        return jdbcTemplate.query("SELECT * FROM USERS", new UserMapper());
     }
 
     @Override
     public User findUserById(Integer id) {
-        return null;
+        return jdbcTemplate.queryForObject("SELECT * FROM USERS WHERE user_id=?", User.class, id);
     }
 }
