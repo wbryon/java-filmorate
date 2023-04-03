@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.impl.InMemoryUserService;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -15,7 +15,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
 public class UserController {
-    private final InMemoryUserService userService;
+    private final UserService userService;
 
     @PostMapping
     public User create(@RequestBody @Valid User user) throws ValidationException {
