@@ -8,5 +8,5 @@ public interface UserStorage {
     void create(User user);
     void update(User user);
     List<User> getAll();
-    User findUserById(Integer id);
+    User findUserById(int id);
 }

@@ -39,7 +39,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public User findUserById(Integer id) {
+    public User findUserById(int id) {
         if (users.get(id) == null)
             throw new UserNotFoundException("Пользователь не найден");
         return users.get(id);
