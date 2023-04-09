@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.storage.impl.memory;
+package ru.yandex.practicum.filmorate.storage.memory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -48,6 +49,14 @@ public class InMemoryFilmStorage implements FilmStorage {
         if (!films.containsKey(id))
             throw new FilmNotFoundException("Фильм с таким id не найден в коллекции!");
         return films.get(id);
+    }
+
+    @Override
+    public Collection<Film> findMostLikedFilms(int count) {
+        return getAllFilms().stream()
+                .sorted((film1, film2) -> film2.getLikes().size() - film1.getLikes().size())
+                .limit(count)
+                .collect(Collectors.toList());
     }
 
     private void validate(Film film) {
