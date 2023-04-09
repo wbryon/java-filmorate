@@ -20,7 +20,7 @@ public class Film {
     private final int duration;
     private Mpa mpa;
     private Set<Integer> likes = new HashSet<>();
-    private Set<Genre> genres = new TreeSet<>(Comparator.comparingInt(genre -> genre.getId()));
+    private Set<Genre> genres = new TreeSet<>(Comparator.comparingInt(Genre::getId));
 
     public void setReleaseDate(LocalDate releaseDate) throws ValidationException {
         if (releaseDate.isBefore(LocalDate.of(1895, 12, 28)))
