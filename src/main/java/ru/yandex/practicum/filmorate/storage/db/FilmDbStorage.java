@@ -24,12 +24,12 @@ import static ru.yandex.practicum.filmorate.storage.db.MpaDbStorage.mpaMapper;
 public class FilmDbStorage implements FilmStorage {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private static final String FILMS = "SELECT f.name AS f_name, description, " +
+    private static final String FILMS = "SELECT f.name f_name, description, " +
             "release_date, duration, rate, f.film_id, m.mpa_id, m.category, g.genre_id, g.genre_name, l.user_id " +
-            "FROM FILMS AS f LEFT JOIN MPA AS m ON f.mpa_id=m.mpa_id " +
-            "LEFT JOIN FILM_GENRE AS fg ON f.film_id=fg.film_id " +
-            "LEFT JOIN GENRES AS g ON fg.genre_id=g.genre_id " +
-            "LEFT JOIN LIKES AS l ON f.film_id=l.film_id";
+            "FROM FILMS f LEFT JOIN MPA m ON f.mpa_id=m.mpa_id " +
+            "LEFT JOIN FILM_GENRE fg ON f.film_id=fg.film_id " +
+            "LEFT JOIN GENRES g ON fg.genre_id=g.genre_id " +
+            "LEFT JOIN LIKES l ON f.film_id=l.film_id";
     public FilmDbStorage(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -44,8 +44,8 @@ public class FilmDbStorage implements FilmStorage {
                 .addValue("rate", film.getLikes().size())
                 .addValue("mpa", film.getMpa().getId());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update("INSERT INTO FILMS (name, description, release_date, duration, rate, mpa_id) " +
-                "VALUES (:name, :description, :release_date, :duration, :rate, :mpa)", sqlParameterSource, keyHolder);
+        jdbcTemplate.update("INSERT INTO FILMS (name, description, release_date, duration, mpa_id, rate) " +
+                "VALUES (:name, :description, :release_date, :duration, :mpa, :rate)", sqlParameterSource, keyHolder);
         int filmId = Objects.requireNonNull(keyHolder.getKey()).intValue();
         likesUpdater(film);
         Set<Genre> genres = film.getGenres();
@@ -71,12 +71,12 @@ public class FilmDbStorage implements FilmStorage {
                 .addValue("rate", film.getLikes().size())
                 .addValue("mpa", film.getMpa().getId());
         jdbcTemplate.update("UPDATE FILMS SET film_id=:id, name=:name, description=:description," +
-                "release_date=:release_date, duration=:duration, rate=:rate, mpa_id=:mpa " +
+                "release_date=:release_date, duration=:duration, mpa_id=:mpa, rate=:rate " +
                 "WHERE film_id=:id", sqlParameterSource);
         jdbcTemplate.update("DELETE FROM LIKES WHERE film_id=:id", Map.of("id", filmId));
         likesUpdater(film);
-        Set<Genre> genres = film.getGenres();
         jdbcTemplate.update("DELETE FROM FILM_GENRE WHERE film_id = :id", Map.of("id", filmId));
+        Set<Genre> genres = film.getGenres();
         genreUpdater(filmId, genres);
         return findFilmById(film.getId());
     }

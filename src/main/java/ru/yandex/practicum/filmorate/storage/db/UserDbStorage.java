@@ -2,9 +2,6 @@ package ru.yandex.practicum.filmorate.storage.db;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -21,7 +18,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Slf4j
-@Component("DbUserStorage")
+@Component("UserDbStorage")
 public class UserDbStorage implements UserStorage {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -50,7 +47,7 @@ public class UserDbStorage implements UserStorage {
         try {
             namedParameterJdbcTemplate.queryForObject("SELECT user_id FROM USERS WHERE user_id=:id",
                     Map.of("id", userId), Integer.class);
-        } catch (IncorrectResultSizeDataAccessException e) {
+        } catch (RuntimeException e) {
             throw new UserNotFoundException("Неверный id");
         }
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource()
@@ -59,19 +56,19 @@ public class UserDbStorage implements UserStorage {
                 .addValue("email", user.getEmail())
                 .addValue("login", user.getLogin())
                 .addValue("birthday", user.getBirthday());
-        namedParameterJdbcTemplate.update("UPDATE USERS SET email=:email, login=:login, name=:name, birthday=:birthday " +
-                "WHERE user_id=:id", sqlParameterSource);
+        namedParameterJdbcTemplate.update("UPDATE USERS SET email=:email, login=:login, name=:name," +
+                "birthday=:birthday WHERE user_id=:id", sqlParameterSource);
         Map<Integer, String> friends = user.getFriends();
         namedParameterJdbcTemplate.update("DELETE FROM USERS_RELATIONSHIP WHERE user_id = :id",
                 Map.of("id", user.getId()));
         List<MapSqlParameterSource> sqlParameterSources = new ArrayList<>();
-        for (Map.Entry<Integer, String> friend : friends.entrySet()) {
+        friends.forEach((key, value) -> {
             MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
-                    .addValue("friend_id", friend.getKey())
-                    .addValue("status", friend.getValue())
+                    .addValue("friend_id", key)
+                    .addValue("status", value)
                     .addValue("id", user.getId());
             sqlParameterSources.add(mapSqlParameterSource);
-        }
+        });
         SqlParameterSource[] sources = sqlParameterSources.toArray(new SqlParameterSource[0]);
         namedParameterJdbcTemplate.batchUpdate("INSERT INTO USERS_RELATIONSHIP (user_id, friend_id, status) " +
                 "VALUES (:id, :friend_id, :status)", sources);
