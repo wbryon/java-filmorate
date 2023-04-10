@@ -14,18 +14,16 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping(value = "/films")
 public class FilmController {
-    final FilmService filmService;
+    private final FilmService filmService;
 
     @PostMapping
     public Film create(@RequestBody @Valid Film film) {
-        filmService.create(film);
-        return film;
+        return filmService.create(film);
     }
 
     @PutMapping
     public Film update(@RequestBody @Valid Film film) {
-        filmService.update(film);
-        return film;
+        return filmService.update(film);
     }
     @GetMapping
     public List<Film> getFilms() {
