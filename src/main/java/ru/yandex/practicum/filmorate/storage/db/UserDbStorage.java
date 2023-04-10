@@ -112,7 +112,7 @@ public class UserDbStorage implements UserStorage {
                     }
                 });
                 Map<Integer, String> friendMap = user.getFriends();
-                Integer friendId = rs.getInt("friend_id");
+                int friendId = rs.getInt("friend_id");
                 if (friendId != 0)
                     friendMap.put(friendId, rs.getString("status"));
             }
