@@ -31,6 +31,7 @@ public class FilmDbStorage implements FilmStorage {
             "LEFT JOIN FILM_GENRE fg ON f.film_id=fg.film_id " +
             "LEFT JOIN GENRES g ON fg.genre_id=g.genre_id " +
             "LEFT JOIN LIKES l ON f.film_id=l.film_id";
+
     public FilmDbStorage(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
