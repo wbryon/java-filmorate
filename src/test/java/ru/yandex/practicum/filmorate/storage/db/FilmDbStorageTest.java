@@ -28,7 +28,7 @@ class FilmDbStorageTest {
     void shouldCreate() {
         Film film1 = new Film("John Wick", "John Wick is a 2014 American neo-noir action thriller film" +
                 "directed by Chad Stahelski in his feature directorial debut and written by Derek Kolstad",101);
-        film1.setReleaseDate( LocalDate.of(2014, 10, 24));
+        film1.setReleaseDate(LocalDate.of(2014, 10, 24));
         film1.setMpa(new Mpa(1, null));
         Film filmWithId = filmStorage.create(film1);
         assertEquals(1, filmWithId.getId());
