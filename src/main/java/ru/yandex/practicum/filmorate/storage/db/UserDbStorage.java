@@ -48,7 +48,7 @@ public class UserDbStorage implements UserStorage {
             namedParameterJdbcTemplate.queryForObject("SELECT user_id FROM USERS WHERE user_id=:id",
                     Map.of("id", userId), Integer.class);
         } catch (RuntimeException e) {
-            throw new UserNotFoundException("Неверный id");
+            throw new UserNotFoundException("Пользователь с id = " + userId + " не найден;");
         }
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("id", user.getId())
@@ -72,7 +72,7 @@ public class UserDbStorage implements UserStorage {
         SqlParameterSource[] sources = sqlParameterSources.toArray(new SqlParameterSource[0]);
         namedParameterJdbcTemplate.batchUpdate("INSERT INTO USERS_RELATIONSHIP (user_id, friend_id, status) " +
                 "VALUES (:id, :friend_id, :status)", sources);
-        return findUserById(user.getId());
+        return findUserById(userId);
     }
 
     @Override

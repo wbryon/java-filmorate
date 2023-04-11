@@ -60,7 +60,7 @@ public class FilmDbStorage implements FilmStorage {
             jdbcTemplate.queryForObject("SELECT film_id FROM FILMS WHERE film_id=:id",
                     Map.of("id", filmId), Integer.class);
         } catch (IncorrectResultSizeDataAccessException e) {
-            throw new UserNotFoundException("Wrong id");
+            throw new UserNotFoundException("Неверный id");
         }
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("id", filmId)
