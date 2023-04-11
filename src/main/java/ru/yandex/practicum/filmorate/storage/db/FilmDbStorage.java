@@ -24,6 +24,7 @@ import static ru.yandex.practicum.filmorate.storage.db.MpaDbStorage.mpaMapper;
 public class FilmDbStorage implements FilmStorage {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+
     private static final String FILMS = "SELECT f.name f_name, description, " +
             "release_date, duration, rate, f.film_id, m.mpa_id, m.category, g.genre_id, g.genre_name, l.user_id " +
             "FROM FILMS f LEFT JOIN MPA m ON f.mpa_id=m.mpa_id " +
