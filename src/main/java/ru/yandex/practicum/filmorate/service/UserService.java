@@ -56,7 +56,7 @@ public class UserService {
     public List<User> getFriends(int id) {
         List<User> friends = new ArrayList<>();
         Map<Integer, String> friendIds = findUserById(id).getFriends();
-        for(Integer friendId : friendIds.keySet()) {
+        for (Integer friendId : friendIds.keySet()) {
             User friend = findUserById(friendId);
             friends.add(friend);
         }
@@ -69,7 +69,7 @@ public class UserService {
         Map<Integer, String> otherFriends = findUserById(otherId).getFriends();
         Set<Integer> sharedIds = new HashSet<>(userFriends.keySet());
         sharedIds.retainAll(otherFriends.keySet());
-        for(Integer userId : sharedIds) {
+        for (Integer userId : sharedIds) {
             sharedFriends.add(findUserById(userId));
         }
         return sharedFriends;
