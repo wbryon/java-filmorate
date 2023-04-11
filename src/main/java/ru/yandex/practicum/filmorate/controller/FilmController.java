@@ -25,6 +25,7 @@ public class FilmController {
     public Film update(@RequestBody @Valid Film film) {
         return filmService.update(film);
     }
+
     @GetMapping
     public List<Film> getFilms() {
         return filmService.getAllFilms();
