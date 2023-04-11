@@ -14,6 +14,7 @@ import java.util.*;
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
     private Integer userId = 0;
+
     @Override
     public User create(User user) {
         if (users.containsValue(user))
