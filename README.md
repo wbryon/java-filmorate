@@ -8,4 +8,3 @@ https://www.baeldung.com/spring-mvc-custom-validator
 
 
 ![QuickDBD-Filmorate](https://user-images.githubusercontent.com/49209809/231424451-05518308-dd79-42f2-b4ff-a02bf0485ac3.png)
->>>>>>> e787974e8d426c516d30a5553f6e167b8bb7deb7
