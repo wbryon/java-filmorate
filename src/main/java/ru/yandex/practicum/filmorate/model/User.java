@@ -4,8 +4,8 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 public class User {
@@ -18,5 +18,12 @@ public class User {
     private String login;
     @Past(message = "Дата рождения не может быть в будущем!")
     private LocalDate birthday;
-    private Set<Integer> friends = new HashSet<>();
+    private Map<Integer, String> friends = new HashMap<>();
+
+    public void setName(String name) {
+        if (name == null || name.isBlank())
+            this.name = login;
+        else
+            this.name = name;
+    }
 }
