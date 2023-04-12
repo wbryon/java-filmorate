@@ -3,7 +3,7 @@ package ru.yandex.practicum.filmorate.storage.db;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.GenreStorage;
 
@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-@Component
+@Repository
 public class GenreDbStorage implements GenreStorage {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     static final RowMapper<Genre> genreMapper = (rs, rowNum) ->
