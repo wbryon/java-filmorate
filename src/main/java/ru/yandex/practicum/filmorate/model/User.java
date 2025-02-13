@@ -1,8 +1,10 @@
 package ru.yandex.practicum.filmorate.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import lombok.*;
 
-import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;

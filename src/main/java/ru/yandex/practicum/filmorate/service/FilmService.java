@@ -10,6 +10,8 @@ import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -54,8 +56,7 @@ public class FilmService {
 
     public Film findFilmById(Integer filmId) {
         Film film = filmStorage.findFilmById(filmId);
-        if (film == null)
-            throw new FilmNotFoundException(Integer.toString(filmId));
-        return film;
+        return Optional.ofNullable(filmStorage.findFilmById(filmId))
+                .orElseThrow(() -> new FilmNotFoundException("Film not found!"));
     }
 }

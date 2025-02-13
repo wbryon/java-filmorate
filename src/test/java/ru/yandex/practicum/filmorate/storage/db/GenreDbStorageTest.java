@@ -33,7 +33,7 @@ class GenreDbStorageTest {
         assertThat(genreOptional)
                 .isPresent()
                 .hasValueSatisfying(genre -> assertThat(genre).hasFieldOrPropertyWithValue("id", 1))
-                .hasValueSatisfying(genre -> assertThat(genre).hasFieldOrPropertyWithValue("name", "Комедия"));
+                .hasValueSatisfying(genre -> assertThat(genre).hasFieldOrPropertyWithValue("name", "Comedy"));
     }
 
     @Test
